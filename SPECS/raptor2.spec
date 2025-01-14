@@ -2,7 +2,7 @@
 Summary: RDF Parser Toolkit for Redland
 Name:    raptor2
 Version: 2.0.15
-Release: 16%{?dist}
+Release: 17%{?dist}
 
 License: GPLv2+ or LGPLv2+ or ASL 2.0
 Source:  http://download.librdf.org/source/raptor2-%{version}.tar.gz
@@ -13,6 +13,8 @@ URL:     http://librdf.org/raptor/
 Patch1: 0001-Calcualte-max-nspace-declarations-correctly-for-XML-.patch
 # https://bugs.librdf.org/mantis/view.php?id=650
 Patch2: 0001-CVE-2020-25713-raptor2-malformed-input-file-can-lead.patch
+# no patch yet but https://github.com/dajobe/raptor/issues/70
+Patch3: CVE-2024-57823.patch
 
 BuildRequires: curl-devel
 %if ! 0%{?flatpak}
@@ -98,6 +100,10 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jan 13 2025 Eike Rathke <erack@redhat.com> - 2.0.15-17
+- Resolves: CVE-2024-57823 integer underflow when normalizing a URI with the
+  turtle parser
+
 * Tue Nov 24 2020 Caolán McNamara <caolanm@redhat.com> - 2.0.15-16
 - Resolves: rhbz#1900904 CVE-2020-25713 raptor2: malformed input file can lead to a segfault
 
