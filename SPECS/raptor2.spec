@@ -2,7 +2,7 @@
 Summary: RDF Parser Toolkit for Redland
 Name:    raptor2
 Version: 2.0.15
-Release: 17%{?dist}
+Release: 18%{?dist}
 
 License: GPLv2+ or LGPLv2+ or ASL 2.0
 Source:  http://download.librdf.org/source/raptor2-%{version}.tar.gz
@@ -15,6 +15,11 @@ Patch1: 0001-Calcualte-max-nspace-declarations-correctly-for-XML-.patch
 Patch2: 0001-CVE-2020-25713-raptor2-malformed-input-file-can-lead.patch
 # no patch yet but https://github.com/dajobe/raptor/issues/70
 Patch3: CVE-2024-57823.patch
+# https://github.com/dajobe/raptor/commit/361a803a72817ae771db2438277229e6541e1575
+Patch4: CVE-2025-71436.patch
+# https://github.com/dajobe/raptor/commit/361a803a72817ae771db2438277229e6541e1575
+# Fix pre-generated turtle_lexer.c callers for updated raptor_stringbuffer_copy_to_string
+Patch5: CVE-2025-71436-turtle-lexer.patch
 
 BuildRequires: curl-devel
 %if ! 0%{?flatpak}
@@ -100,6 +105,11 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Oct 20 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 2.0.15-18
+- CVE-2025-71436 raptor2: raptor2: arbitrary code execution via heap-based buffer overflow in language tag handling
+  heap-based buffer overflow in language tag handling
+- Resolves: RHEL-287843
+
 * Mon Jan 13 2025 Eike Rathke <erack@redhat.com> - 2.0.15-17
 - Resolves: CVE-2024-57823 integer underflow when normalizing a URI with the
   turtle parser
